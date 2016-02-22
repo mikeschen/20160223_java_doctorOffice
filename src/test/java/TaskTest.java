@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import org.junit.Rule;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TaskTest {
 
@@ -16,32 +16,42 @@ public class TaskTest {
 
   @Test
   public void equals_returnsTrueIfDescriptionAreTheSame(){
-    Task firstTask = new Task("Mow the lawn");
-    Task secondTask = new Task("Mow the lawn");
+    Task firstTask = new Task("Mow the lawn", 1);
+    Task secondTask = new Task("Mow the lawn", 1);
     assertTrue(firstTask.equals(secondTask));
   }
 
   @Test
   public void save_returnTrueIfDescriptionsAretheSame() {
-    Task myTask = new Task("Mow the lawn");
+    Task myTask = new Task("Mow the lawn", 1);
     myTask.save();
     assertTrue(Task.all().get(0).equals(myTask));
   }
 
   @Test
   public void save_assignsIdToObject() {
-    Task myTask = new Task("Mow the lawn");
+    Task myTask = new Task("Mow the lawn", 1);
     myTask.save();
-    Task saveTask = Task.all().get(0);
+    Task savedTask = Task.all().get(0);
     assertEquals(myTask.getId(), savedTask.getId());
   }
 
   @Test
   public void find_findsTaskinDatabase_true() {
-    Task myTask = new Task("Mow the lawn");
+    Task myTask = new Task("Mow the lawn", 1);
     myTask.save();
-    Task saveTask = Task.find(myTask.getId());
+    Task savedTask = Task.find(myTask.getId());
     assertTrue(myTask.equals(savedTask));
+  }
+
+  @Test
+  public void save_savesCatIdIntoDB_true() {
+    Category myCategory = new Category("Household chores");
+    myCategory.save();
+    Task myTask = new Task("Mow the lawn", myCategory.getId());
+    myTask.save();
+    Task savedTask = Task.find(myTask.getId());
+    assertEquals(savedTask.getCategoryId(), myCategory.getId());
   }
 
   // @Test
