@@ -1,0 +1,6 @@
+<h1>doctors</h1>
+#foreach($doctor in $doctors)
+  <h3><a href="/doctors/$doctor.getId()">$doctor.getLast()</a></h3>
+#end
+<a href="/">Return to Main Page</a><br>
+<a href="/doctors/new">Add a New Doctor</a>

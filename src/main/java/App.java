@@ -13,77 +13,81 @@ public class App {
 
     get("/", (request, response) -> {
       HashMap<String,Object>model = new HashMap<String, Object>();
-      model.put("tasks", request.session().attribute("tasks"));
+      // model.put("patients", request.session().attribute("patients"));
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/tasks", (request, response) -> {
+    get("/patients", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("tasks", Task.all());
-      model.put("template", "templates/tasks.vtl");
+      model.put("patients", Patient.all());
+      model.put("template", "templates/patients.vtl");
       return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
-    get("tasks/new", (request, response) -> {
+    get("patients/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/task-form.vtl");
+      model.put("template", "templates/patients-form.vtl");
       return new ModelAndView(model, layout);
       }, new VelocityTemplateEngine());
 
-    post("/tasks", (request,response) -> {
+    post("/patients", (request,response) -> {
       HashMap<String, Object>model = new HashMap<String, Object>();
-      Category category = Category.find(Integer.parseInt(request.queryParams("categoryId")));
-      String description = request.queryParams("description");
-      Task newTask = new Task(description, category.getId());
-      newTask.save();
-      //model.put("category", category);
-      model.put("template", "templates/category.vtl");
+      Doctor doctor = Doctor.find(Integer.parseInt(request.queryParams("doctorId")));
+      String first = request.queryParams("first");
+      String last = request.queryParams("last");
+      String birthdate = request.queryParams("birthdate");
+      Patient newpatient = new Patient(first, last, birthdate, doctor.getId());
+      newpatient.save();
+      //model.put("doctor", doctor);
+      model.put("template", "templates/doctor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/tasks/:id", (request, response) -> {
+    get("/patients/:id", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      Task task = Task.find(Integer.parseInt(request.params(":id")));
-      model.put("task", task);
-      model.put("template", "templates/task.vtl");
+      Patient patient = Patient.find(Integer.parseInt(request.params(":id")));
+      model.put("patient", patient);
+      model.put("template", "templates/patient.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/categories", (request, response) -> {
+    get("/doctors", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("categories", Category.all());
-      model.put("template", "templates/categories.vtl");
+      model.put("doctors", Doctor.all());
+      model.put("template", "templates/doctors.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("categories/new", (request, response) -> {
+    get("doctors/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/category-form.vtl");
+      model.put("template", "templates/doctor-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/categories", (request,response) -> {
+    post("/doctors", (request,response) -> {
       HashMap<String, Object>model = new HashMap<String, Object>();
-      String name = request.queryParams("name");
-      Category newCategory = new Category(name);
-      newCategory.save();
-      // model.put("category", newCategory);
+      String first = request.queryParams("first");
+      String last = request.queryParams("last");
+      String specialty = request.queryParams("specialty");
+      Doctor newdoctor = new Doctor(first, last, specialty);
+      newdoctor.save();
+      // model.put("doctor", newdoctor);
       model.put("template", "templates/success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/categories/:id", (request, response) -> {
+    get("/doctors/:id", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("category", Category.find(Integer.parseInt(request.params(":id"))));
-      model.put("template", "templates/category.vtl");
+      model.put("doctor", Doctor.find(Integer.parseInt(request.params(":id"))));
+      model.put("template", "templates/doctor.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/categories/:id/tasks/new", (request, response) -> {
+    get("/doctors/:id/patients/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("category", Category.find(Integer.parseInt(request.params(":id"))));
-      model.put("template", "templates/category-tasks-form.vtl");
+      model.put("doctor", Doctor.find(Integer.parseInt(request.params(":id"))));
+      model.put("template", "templates/doctor-patients-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }

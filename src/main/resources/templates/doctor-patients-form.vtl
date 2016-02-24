@@ -1,0 +1,11 @@
+<p>Add a new Patient to your $doctor.getLast()</p>
+<form action="/patients" method="post">
+  <input id="doctorId" name="doctorId" type="hidden" value="$doctor.getId()">
+    <label for="first">Patient First Name</label>
+    <input id="first" name="first" type="text">
+    <label for="last">Patient Last Name</label>
+    <input id="last" name="last" type="text">
+    <label for="birthdate">Date of Birth</label>
+    <input id="birthdate" name="birthdate" type="date">
+    <button type="submit" class="btn btn-success">Add Patient</button>
+  </form>

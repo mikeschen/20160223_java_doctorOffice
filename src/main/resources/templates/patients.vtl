@@ -1,0 +1,8 @@
+
+<h1> All patients </h1>
+<ul>
+#foreach ($patient in $patients)
+  <a href="/patients/$patient.getId()">$patient.getLast()</a>
+#end
+</ul>
+<a href="/patients/new">Add New patient</a>

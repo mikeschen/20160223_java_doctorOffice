@@ -1,0 +1,17 @@
+<h1>Add a doctor</h1>
+
+<p>Add a doctor here:</p>
+
+<form action="/doctors" method="post">
+  <label for="first">Doctor First Name</label>
+  <input id="first" name="first" type="text">
+  <label for="last">Doctor Last Name</label>
+  <input id="last" name="last" type="text">
+  <label for="specialty">Specialty</label>
+  <select id="specialty">
+    <option value="family">Family</option>
+    <option value="general">General</option>
+    <option value="pediatrician">Pediatrician</option>
+  </select>
+  <button type="submit" class="btn btn-success">Add Doctor</button>
+</form>
